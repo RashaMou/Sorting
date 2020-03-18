@@ -1,46 +1,42 @@
 # TO-DO: complete the helper function below to merge 2 sorted arrays
 def merge(arrA, arrB):
     elements = len(arrA) + len(arrB)
-    # merged_arr = [0] * elements
     merged = []
     # TO-DO
-    index_a = index_b = 0
-    # length of merged has to total the sum of the length of both arrays
+    index_a = 0
+    index_b = 0
     while len(merged) < elements:
         if arrA[index_a] <= arrB[index_b]:
             merged.append(arrA[index_a])
             index_a += 1
-        else:
+        elif arrB[index_b] <= arrA[index_a]:
             merged.append(arrB[index_b])
             index_b += 1
         # if we reach the end of one of the arrays, we should break. Whenever we append, the index is incremented by 1, so when we append the last element, the index will be equal to len(arr), meaning we have reached the end
         if index_a == len(arrA):
-            merged.append(arrB[index_b:])
+            merged.extend(arrB[index_b:])
         elif index_b == len(arrB):
-            merged.append(arrA[index_a:])
+            merged.extend(arrA[index_a:])
     return merged
 
 
 # TO-DO: implement the Merge Sort function below USING RECURSION
 def merge_sort(arr):
-    middle = len(arr) // 2
-    lefthalf = arr[:middle]
-    righthalf = arr[middle:]
-
-    if len(lefthalf) == 1:
-        print("lefthalf:", lefthalf)
-        return lefthalf
+    if len(arr) > 1:
+        middle = len(arr) // 2
     else:
-        merge_sort(lefthalf)
-    if len(righthalf) == 1:
-        print("righthalf:", righthalf)
-        return lefthalf
+        return arr
+    # base condition:
+    if len(arr) == 1:
+        return 1
     else:
-        merge_sort(righthalf)
-    return arr
+        left = merge_sort(arr[:middle])
+        right = merge_sort(arr[middle:])
+    return merge(left, right)
 
 
 print(merge_sort([2, 6, 23, 67, 8, 2, 7, 8, 3, 45]))
+
 # STRETCH: implement an in-place merge sort algorithm
 def merge_in_place(arr, start, mid, end):
     # TO-DO
